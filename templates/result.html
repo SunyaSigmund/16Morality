@@ -12,16 +12,19 @@
         <h2>성격 설명</h2>
         <p class="result-description">{{ description | safe }}</p>  
 
-        <hr> <!-- 구분선 추가 -->
+        <hr>
 
-        <!-- 이메일 수집 섹션 -->
         <div class="email-collection">
             <h3>Email to be on the Waitlist.</h3>
-            <p></p>
             <form action="/subscribe" method="POST">
+                <input type="hidden" name="personality" value="{{ personality }}">
+                <input type="hidden" name="description" value="{{ description }}">
                 <input type="email" name="email" placeholder="이메일을 입력하세요" required>
                 <button type="submit">구독하기</button>
             </form>
+            {% if registered %}
+                <p style="color: green; font-weight: bold;">Registered on Waitlist.</p>
+            {% endif %}
         </div>
 
         <a href="/">다시 테스트하기</a>
