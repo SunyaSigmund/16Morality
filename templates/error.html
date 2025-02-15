@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>오류 발생</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .error-box {
+            display: inline-block;
+            background-color: #ffdddd;
+            padding: 20px;
+            border: 2px solid #ff5555;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .error-message {
+            font-size: 20px;
+            font-weight: bold;
+            color: #cc0000;
+        }
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #ff5555;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .back-button:hover {
+            background-color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-box">
+        <p class="error-message">{{ message }}</p>
+        <button class="back-button" onclick="window.history.back();">돌아가기</button>
+    </div>
+</body>
+</html>

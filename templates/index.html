@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>성격 유형 검사</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .question-container {
+            margin-bottom: 50px; /* ✅ 질문 간격을 넓힘 (기존 30px → 50px) */
+            text-align: center;
+        }
+
+        .question {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px; /* ✅ 버튼 간격 약간 넓힘 */
+            margin-top: 10px;
+        }
+
+        .score-button {
+            width: 40px;
+            height: 40px;
+            font-size: 14px;
+            font-weight: bold;
+            border: 2px solid #ccc;
+            background-color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 38px;
+            color: #555;
+        }
+
+        .score-button:hover {
+            background-color: #ddd;
+        }
+
+        .score-button.selected {
+            background-color: #4c83ff;
+            color: white;
+            border: 2px solid #3a6de0;
+        }
+
+        .score-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: bold;
+            color: #555;
+            margin-top: 8px;
+        }
+
+        .side-label {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0 15px;
+        }
+
+        .left-label {
+            color: #2c7c40; /* ✅ 초록색 */
+        }
+
+        .right-label {
+            color: #8245a1; /* ✅ 보라색 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>성격 유형 검사</h1>
+        <form action="/submit" method="POST">
+            {% for i in range(questions|length) %}
+                <div class="question-container">
+                    <p class="question">{{ questions[i] }}</p>
+                    <div class="button-group">
+                        <span class="side-label left-label">그렇다</span>
+                        {% for score in range(1, 8) %}
+                            <button type="button" class="score-button" data-question="{{ i }}" data-score="{{ score }}">
+                                {{ score }}
+                            </button>
+                        {% endfor %}
+                        <span class="side-label right-label">그렇지 않다</span>
+                    </div>
+                    <input type="hidden" name="q{{ i+1 }}" id="score-input-{{ i }}" value="">
+                </div>
+            {% endfor %}
+            <button type="submit">결과 보기</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let buttons = document.querySelectorAll(".score-button");
+
+            buttons.forEach(button => {
+                button.addEventListener("click", function () {
+                    let questionIndex = this.getAttribute("data-question");
+                    let score = this.getAttribute("data-score");
+
+                    // 선택된 버튼 스타일 초기화
+                    let allButtons = document.querySelectorAll(`.score-button[data-question="${questionIndex}"]`);
+                    allButtons.forEach(btn => btn.classList.remove("selected"));
+
+                    // 선택된 버튼 강조
+                    this.classList.add("selected");
+
+                    // 선택된 점수 저장
+                    document.getElementById(`score-input-${questionIndex}`).value = score;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

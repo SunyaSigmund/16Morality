@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>테스트 결과</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container result-container">
+        <h1 class="result-title">테스트 결과</h1>
+        <p><strong>당신의 도덕적 성격 유형:</strong> {{ personality }}</p>
+        <h2>성격 설명</h2>
+        <p class="result-description">{{ description | safe }}</p>  
+        <a href="/">다시 테스트하기</a>
+    </div>
+</body>
+</html>
